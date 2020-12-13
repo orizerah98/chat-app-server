@@ -2,7 +2,7 @@ import { PassportLocalDocument } from "mongoose";
 import { Document } from "mongoose";
 
 export interface IUser extends PassportLocalDocument {
-  username: string;
+  email: string;
   password: string;
   displayName: string;
 }

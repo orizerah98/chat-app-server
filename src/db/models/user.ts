@@ -1,19 +1,14 @@
 import { model, Schema, PassportLocalModel } from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose";
+import isEmail from "validator/lib/isEmail";
 
 import { IUser } from "../../interfaces/models";
 
 export const userSchema = new Schema({
-  username: {
+  email: {
     type: String,
     unique: true,
-    validate: {
-      validator: (value: string) => {
-        if (value.length > 16) {
-          throw new Error("Username length is over 16 characters");
-        }
-      },
-    },
+    validate: isEmail,
   },
   password: {
     type: String,
