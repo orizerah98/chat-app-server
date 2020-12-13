@@ -3,4 +3,4 @@ import * as userController from "./controllers/userController";
 
 const router = Router();
 
-router.route("/users").post(userController.registerUser);
+router.route("/register").post(userController.registerUser);
