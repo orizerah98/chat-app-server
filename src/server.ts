@@ -12,14 +12,6 @@ const io = require("socket.io")(server, {
   },
 });
 
-io.on("connection", (socket: any) => {
-  console.log("connection established!");
-});
-
-io.on("test", (socket: any) => {
-  console.log("test");
-});
-
 server.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
