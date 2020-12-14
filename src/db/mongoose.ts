@@ -6,6 +6,10 @@ const initMongoose = (): void => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+  } else {
+    throw new Error(
+      `Couldn't connect to mongo on "${process.env.MONGODB_CONNECTION_STRING}"`
+    );
   }
 };
 
