@@ -24,7 +24,7 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-userSchema.plugin(passportLocalMongoose, { usernameField: "username" });
+userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 
 const User: PassportLocalModel<IUser> = model<IUser>(
   "User",
