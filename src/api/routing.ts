@@ -5,7 +5,7 @@ import passport from "passport";
 const router = Router();
 
 router.route("/register").post(authController.registerUser);
-router.post("/login", authController.login);
+router.route("/login").post(authController.login);
 
 router.use(passport.authenticate("local")); // Every route after this line will be authenticated.
 
