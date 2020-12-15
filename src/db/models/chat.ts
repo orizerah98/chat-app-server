@@ -1,10 +1,9 @@
-import { model, Schema, PassportLocalModel } from "mongoose";
+import { model, Schema, PassportLocalModel, SchemaTypes } from "mongoose";
 
-import { userSchema } from "./user";
 import { IChat } from "../../interfaces/models";
 
 const chatSchema = new Schema({
-  users: [userSchema],
+  users: [{ type: SchemaTypes.ObjectId, ref: "User" }],
   messages: {
     type: [
       {
@@ -16,6 +15,12 @@ const chatSchema = new Schema({
     default: [],
   },
 });
+
+chatSchema.indexes = function () {
+  // Disables indexing of embedded documents (User email in this case).
+  // @ts-ignore
+  return chatSchema._indexes;
+};
 
 const Chat: PassportLocalModel<IChat> = model<IChat>(
   "Chat",

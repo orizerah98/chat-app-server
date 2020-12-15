@@ -14,6 +14,6 @@ interface IMessage {
 }
 
 export interface IChat extends Document {
-  users: Array<string>;
+  users: Array<IUser>;
   messages: Array<IMessage>;
 }
