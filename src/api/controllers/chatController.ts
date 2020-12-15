@@ -6,8 +6,8 @@ import { IExpressRouteCallback } from "../../interfaces/routing";
 
 export const addChat: IExpressRouteCallback = async (req, res) => {
   try {
-    const { userEmails } = req.body;
-    const chat = await chatService.addChat(userEmails);
+    const { userEmails, name, iconUrl } = req.body;
+    const chat = await chatService.addChat(userEmails, name, iconUrl);
     res.send(chat);
   } catch (err) {
     console.log(err);

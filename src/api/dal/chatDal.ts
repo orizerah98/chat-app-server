@@ -2,9 +2,13 @@ import Chat from "../../db/models/chat";
 import User from "../../db/models/user";
 import { IChat } from "../../interfaces/models";
 
-export const addChat = async (userEmails: string[]): Promise<IChat> => {
+export const addChat = async (
+  userEmails: string[],
+  name: string,
+  iconUrl: string
+): Promise<IChat> => {
   const users = await User.find({ email: { $in: userEmails } });
-  const chat = new Chat({ users: users });
+  const chat = new Chat({ users: users, name: name, iconUrl: iconUrl });
   await chat.save();
   return chat;
 };

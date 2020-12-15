@@ -1,8 +1,12 @@
 import * as chatDal from "../dal/chatDal";
 import { IChat } from "../../interfaces/models";
 
-export const addChat = (userEmails: string[]): Promise<IChat> => {
-  return chatDal.addChat(userEmails);
+export const addChat = (
+  userEmails: string[],
+  name: string,
+  iconUrl: string
+): Promise<IChat> => {
+  return chatDal.addChat(userEmails, name, iconUrl);
 };
 
 export const addMessage = async (

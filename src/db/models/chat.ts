@@ -14,6 +14,8 @@ const chatSchema = new Schema({
     ],
     default: [],
   },
+  name: String,
+  iconUrl: String,
 });
 
 chatSchema.indexes = function () {
