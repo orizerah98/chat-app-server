@@ -7,6 +7,12 @@ import { IExpressRouteCallback } from "../../interfaces/routing";
 export const addChat: IExpressRouteCallback = async (req, res) => {
   try {
     const { userEmails, name, iconUrl } = req.body;
+    if (!userEmails || !name || !iconUrl) {
+      res
+        .status(400)
+        .send("Missing required parameters [name, userEmails, iconUrl]");
+      return;
+    }
     const chat = await chatService.addChat(userEmails, name, iconUrl);
     res.send(chat);
   } catch (err) {
@@ -17,8 +23,9 @@ export const addChat: IExpressRouteCallback = async (req, res) => {
 
 export const getUserChats: IExpressRouteCallback = async (req, res) => {
   try {
-    const { userId } = req.body;
-    const chats = await chatService.getUserChats(userId);
+    const { userId } = req.query;
+    if (!userId) throw new Error("UserId not supplied");
+    const chats = await chatService.getUserChats(userId as string);
     res.send(chats);
   } catch (err) {
     console.log(err);
@@ -31,6 +38,7 @@ export const addUserToChat: IExpressRouteCallback = async (req, res) => {
     const { chatId } = req.params;
     const { userId } = req.body;
     const chat = await chatService.addUserToChat(userId, chatId);
+    res.send(chat);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

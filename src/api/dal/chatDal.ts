@@ -29,7 +29,8 @@ export const addMessage = async (
 };
 
 export const getUserChats = async (userId: string): Promise<Array<IChat>> => {
-  const chats = await Chat.find({ messages: { $elemMatch: { _id: userId } } });
+  // @ts-ignore
+  const chats = await Chat.find({ users: userId });
   return chats;
 };
 
