@@ -17,6 +17,7 @@ export const registerUser: IExpressRouteCallback = async (req, res) => {
         passport.authenticate("local")(req, res, () => {
           res.send(user);
         });
+        if (err) throw err;
       }
     );
   } catch (err) {
