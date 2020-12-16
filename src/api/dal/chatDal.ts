@@ -21,7 +21,7 @@ export const addMessage = async (
 ): Promise<void> => {
   const chat = (await Chat.findById(chatId)) as IChat;
   chat.messages.push({
-    userDisplayName: displayName,
+    displayName: displayName,
     sendTime: sendTime,
     message: message,
   });

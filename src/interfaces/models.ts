@@ -8,7 +8,7 @@ export interface IUser extends PassportLocalDocument {
 }
 
 interface IMessage {
-  userDisplayName: string;
+  displayName: string;
   sendTime: Date;
   message: string;
 }
