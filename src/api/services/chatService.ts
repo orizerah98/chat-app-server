@@ -18,10 +18,13 @@ export const addMessage = async (
   chatDal.addMessage(chatId, displayName, sendTime, message);
 };
 
-export const getUserChats = async (userId: string): Promise<Array<IChat>> => {
+export const getUserChats = (userId: string): Promise<Array<IChat>> => {
   return chatDal.getUserChats(userId);
 };
 
-export const addUserToChat = async (userId: string, chatId: string) => {
+export const addUserToChat = (
+  userId: string,
+  chatId: string
+): Promise<IChat> => {
   return chatDal.addUserToChat(userId, chatId);
 };
