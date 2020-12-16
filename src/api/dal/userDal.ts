@@ -6,3 +6,8 @@ export const getUserById = async (userId: string): Promise<IUser> => {
   if (!user) throw new Error(`UserId: ${userId} doesn't exist`);
   return user;
 };
+
+export const getAllUsers = async (): Promise<Array<IUser>> => {
+  const users = await User.find({});
+  return users;
+};
