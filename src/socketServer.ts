@@ -17,8 +17,8 @@ export default function initSocketServer(socketServer: Server) {
   socketServer.on("connection", (socket: Socket) => {
     activeSockets.push(socket);
     socket.on("sendMessage", (data: IMessage) => {
-      const { chatId, message, displayName } = data;
-      addMessage(chatId, displayName, new Date(), message);
+      const { chatId, message, displayName, sendTime } = data;
+      addMessage(chatId, displayName, new Date(sendTime), message);
       sendMessage(JSON.stringify(data), socket.id);
     });
   });
