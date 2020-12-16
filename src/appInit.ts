@@ -6,7 +6,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import User from "./db/models/user";
 
 const enableCors: any = (req: Request, res: Response, next: Function) => {
-  res.header("Access-Control-Allow-Origin", "http://192.168.105.24:3000");
+  res.header("Access-Control-Allow-Origin", process.env.WEBSERVER_URL);
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"

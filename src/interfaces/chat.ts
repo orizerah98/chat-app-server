@@ -1,5 +1,5 @@
 export interface IMessage {
-  content: string;
+  message: string;
   displayName: string;
   chatId: string;
 }

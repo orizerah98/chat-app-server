@@ -19,7 +19,7 @@ export const userSchema = new Schema({
 });
 
 userSchema.pre("save", function (next) {
-  const t = this as any; // Document is User type but not defined yet
+  const t = this as IUser; // Document is User type but not defined yet
   t.displayName = this.get("displayName");
   next();
 });
