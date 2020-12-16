@@ -3,6 +3,12 @@ import User from "../../db/models/user";
 import { IChat } from "../../interfaces/models";
 import * as userDal from "./userDal";
 
+export const getChatById = async (chatId: string): Promise<IChat> => {
+  const chat = await Chat.findById(chatId);
+  if (!chat) throw new Error(`ChatId: ${chatId} doesn't exist`);
+  return chat;
+};
+
 export const addChat = async (
   userEmails: string[],
   name: string,
@@ -22,7 +28,7 @@ export const addMessage = async (
   sendTime: Date,
   message: string
 ): Promise<void> => {
-  const chat = (await Chat.findById(chatId)) as IChat;
+  const chat = await getChatById(chatId);
   chat.messages.push({
     displayName: displayName,
     sendTime: sendTime,
@@ -33,15 +39,17 @@ export const addMessage = async (
 
 export const getUserChats = async (userId: string): Promise<Array<IChat>> => {
   const user = await userDal.getUserById(userId);
-  if (!user) throw new Error(`UserId: ${userId} doesn't exist`);
   const chats = await Chat.find({ users: user });
   return chats;
 };
 
-export const addUserToChat = async (userId: string, chatId: string) => {
+export const addUserToChat = async (
+  userId: string,
+  chatId: string
+): Promise<IChat> => {
   const user = await userDal.getUserById(userId);
-  if (!user) throw new Error(`UserId: ${userId} doesn't exist`);
-  const chat = await Chat.findById(chatId);
-  if (!chat) throw new Error(`ChatId: ${chatId} doesn't exist`);
+  const chat = await getChatById(chatId);
   chat.users.push(user);
+  await chat.save();
+  return chat;
 };
