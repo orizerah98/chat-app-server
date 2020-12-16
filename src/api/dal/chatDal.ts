@@ -1,6 +1,7 @@
 import Chat from "../../db/models/chat";
 import User from "../../db/models/user";
 import { IChat } from "../../interfaces/models";
+import * as userDal from "./userDal";
 
 export const addChat = async (
   userEmails: string[],
@@ -8,6 +9,8 @@ export const addChat = async (
   iconUrl: string
 ): Promise<IChat> => {
   const users = await User.find({ email: { $in: userEmails } });
+  if (users.length !== userEmails.length)
+    throw new Error(`Some users in ${userEmails} don't exist`);
   const chat = new Chat({ users: users, name: name, iconUrl: iconUrl });
   await chat.save();
   return chat;
@@ -29,16 +32,16 @@ export const addMessage = async (
 };
 
 export const getUserChats = async (userId: string): Promise<Array<IChat>> => {
-  // @ts-ignore
-  const chats = await Chat.find({ users: userId });
+  const user = await userDal.getUserById(userId);
+  if (!user) throw new Error(`UserId: ${userId} doesn't exist`);
+  const chats = await Chat.find({ users: user });
   return chats;
 };
 
 export const addUserToChat = async (userId: string, chatId: string) => {
-  const user = await User.findById(userId);
+  const user = await userDal.getUserById(userId);
+  if (!user) throw new Error(`UserId: ${userId} doesn't exist`);
   const chat = await Chat.findById(chatId);
-  if (!user) {
-    throw new Error("User doesn't exist");
-  }
-  chat?.users.push(user);
+  if (!chat) throw new Error(`ChatId: ${chatId} doesn't exist`);
+  chat.users.push(user);
 };

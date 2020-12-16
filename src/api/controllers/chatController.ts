@@ -1,6 +1,3 @@
-import Chat from "../../db/models/chat";
-import User from "../../db/models/user";
-import { IChat } from "../../interfaces/models";
 import * as chatService from "../services/chatService";
 import { IExpressRouteCallback } from "../../interfaces/routing";
 
@@ -24,7 +21,10 @@ export const addChat: IExpressRouteCallback = async (req, res) => {
 export const getUserChats: IExpressRouteCallback = async (req, res) => {
   try {
     const { userId } = req.query;
-    if (!userId) throw new Error("UserId not supplied");
+    if (!userId) {
+      res.status(401).send("User is not authenticated");
+      return;
+    }
     const chats = await chatService.getUserChats(userId as string);
     res.send(chats);
   } catch (err) {
