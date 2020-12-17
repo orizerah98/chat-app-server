@@ -6,7 +6,7 @@ import { IMessage } from "./interfaces/chat";
 var activeSockets: Socket[] = [];
 
 const sendMessage = (message: string, socketId: string) => {
-  activeSockets.map((socket) => {
+  activeSockets.forEach((socket) => {
     if (socket.id != socketId) {
       socket.emit("sendMessage", message);
     }
